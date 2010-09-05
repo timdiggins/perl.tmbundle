@@ -13,8 +13,9 @@ $Carp::CarpLevel = 1;     # How many extra package levels to skip on carp.
 BEGIN {
     *CORE::GLOBAL::die = \&tm_die;
     $main::SIG{__DIE__} = \&tm_die;
-    my $error_fd = $ENV{"TM_ERROR_FD"};
-	open (TM_ERROR_FD, ">&=$error_fd");
+    $ENV{"TM_ERROR_FD"} =~ /([0-9]+)/; 
+    my $error_fd =$1;
+    open (TM_ERROR_FD, ">&=$error_fd");
 	TM_ERROR_FD->autoflush(1);
 }
 
